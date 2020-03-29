@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+ var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
@@ -42,19 +42,63 @@ var app = {
         console.log('Received Event: ' + id);
     }
 
-
 };
 
 
- document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems, options);
-  });
+});
 
   // Or with jQuery
 
   $(document).ready(function(){
     $('.sidenav').sidenav();
-  });
+});
+
+
+function buscaArtista() {
+    var input, ul;
+    input = document.getElementById('barra-busca').value;
+    ul = document.getElementById("llistaUL");
+    console.log(input);
+    $.ajax({
+      method: "GET",
+      url: "https://musicbrainz.org/ws/2/artist?query="+input,
+  dataType: "json",   // necessitem això pq ens retorni un objecte JSON
+}).done(function (msg) {
+  for(var item in msg.artists) {
+
+    console.log(msg.artists[item]);
+    var li = document.createElement("li");
+    var text = msg.artists[item].name;
+
+    eliminarInecesaris(text);
+
+    li.appendChild(document.createTextNode(text));
+    li.setAttribute("class", "collection-item");
+    ul.appendChild(li);
+};
+}).fail(function () {
+    alert("ERROR");
+});
+}
+
+function eliminarInecesaris(text) {
+    var ul = document.getElementById("llistaUL");
+    var li = ul.getElementsByTagName('li');
+
+    for (var i = 0 ; li.lenght ; i++) {
+        var a = li[i].getElementsByTagName("a")[0];
+        var txtValue = a.textContent || a.innerText;
+
+        if (txtValue.toUpperCase().indexOf(text) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
 
 app.initialize();
