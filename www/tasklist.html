@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' &apos;self&apos; data: gap: https://ssl.gstatic.com &apos;unsafe-eval&apos;; style-src &apos;self&apos; &apos;unsafe-inline&apos;; media-src *; img-src &apos;self&apos; data: content:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
+  <style>
+  /* For avoiding title truncation in wp8 */
+  .ui-header .ui-title {
+    overflow: visible !important;
+  }
+  /* For fixing the absolute position issue for the default cordova gen page*/
+  #cjp-accordion1 .app {
+    left: 5px !important;
+    margin: 5px !important;
+    position: relative !important;
+  }
+
+  /*Barra de botons*/
+  #btnPanel {
+    text-align: right;
+  }
+
+  #btnEsborrar {
+    float: right;
+  }
+
+  </style>
+</head>
+<body>		<!-- page 1 -->
+  <div data-role="page" id="homePage">
+    <div data-role="header">
+      <h1>Llista de tasques</h1>
+      <div id="btnPanel"><button id="afegir" class="boto">Afegir Tasca</button></div>
+
+    </div>
+    <ul id ="llista" data-role="listview">
+
+    </ul>
+
+    <div data-role="footer" data-position="fixed">
+      <h1><a href="index.html">Tornar al buscador de bandes</a></h1>
+    </div><!-- /footer -->
+  </div> <!-- home page -->
+  <script type="text/javascript" src="cordova.js"></script><script type="text/javascript" src="js/jquery-1.11.1.min.js" id="cordova-jquery"></script><script type="text/javascript" id="jqm-trans-disable">
+  /* For having a faster transition */
+  $(document).on("mobileinit", function() {
+    $.mobile.defaultPageTransition = "none";
+    $.mobile.defaultDialogTransition = "none";
+
+    $(document).ready(function() {
+      $('#btnPanel').click(afegirTasca);
+    });
+
+  });
+  </script><script type="text/javascript" src="js/jquery-1.5.0.mobile.min.js"></script><script type="text/javascript" src="js/tasklist.js"></script></body>
+</html>

@@ -41,25 +41,29 @@
 
         console.log('Received Event: ' + id);
     }
-
 };
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, options);
-});
-
-  // Or with jQuery
-
-  $(document).ready(function(){
+$(document).ready(function(){
     $('.sidenav').sidenav();
+  //  $('.barra-busca').on("input", buscaArtista());
 });
-
 
 function buscaArtista() {
-    var input, ul;
-    input = document.getElementById('barra-busca').value;
+    eliminarInecesaris();
+    var aux, ul;
+    aux = document.getElementById('search');
+    var input;
+    if (aux != null) {
+      if (aux.value == "") {
+        return;
+      } else {
+        input = aux.value;
+      }
+    }
+    else {
+      input = "Queen";
+    }
+
     ul = document.getElementById("llistaUL");
     console.log(input);
     $.ajax({
@@ -72,9 +76,6 @@ function buscaArtista() {
     console.log(msg.artists[item]);
     var li = document.createElement("li");
     var text = msg.artists[item].name;
-
-    eliminarInecesaris(text);
-
     li.appendChild(document.createTextNode(text));
     li.setAttribute("class", "collection-item");
     ul.appendChild(li);
@@ -84,21 +85,11 @@ function buscaArtista() {
 });
 }
 
-function eliminarInecesaris(text) {
+function eliminarInecesaris() {
     var ul = document.getElementById("llistaUL");
-    var li = ul.getElementsByTagName('li');
-
-    for (var i = 0 ; li.lenght ; i++) {
-        var a = li[i].getElementsByTagName("a")[0];
-        var txtValue = a.textContent || a.innerText;
-
-        if (txtValue.toUpperCase().indexOf(text) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-    }
+    ul.innerHTML = '';
 }
+
 
 
 app.initialize();
